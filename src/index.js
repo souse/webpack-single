@@ -6,8 +6,12 @@ import { AppContainer } from 'react-hot-loader';
 
 import configStore from './store';
 import route from './route';
+import { addItem } from '@/utils';
 
 const store = configStore();
+
+//for dev
+addItem('USER', { name: '叶良成' });
 
 render(
 	<AppContainer>

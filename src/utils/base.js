@@ -163,11 +163,11 @@ var Base = {
     },
 
     showLoading: function (content) {
-        Toast.loading(content, 0);
+        //Toast.loading(content, 0);
     },
 
     hideLoading: function () {
-        Toast.hide();
+        //Toast.hide();
     },
 
     decode: function (input) {
