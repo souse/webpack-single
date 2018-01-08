@@ -1,16 +1,20 @@
-/**
- * Test
- */
-export default class Test {
-	add(m, n) {
-		return m * n;
-	}
-}
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { HashRouter as Router } from 'react-router-dom';
+import { AppContainer } from 'react-hot-loader';
 
-export const multi = (a, b) => {
-	return a + b;
-}
+import configStore from './store';
+import route from './route';
 
-export const dll = (a, b) => {
-	return a - b;
-}
+const store = configStore();
+
+render(
+	<AppContainer>
+  		<Provider store={ store }>
+    		<Router children={ route } />
+  		</Provider>
+  	</AppContainer>,
+  	document.getElementById('root')
+);
+
