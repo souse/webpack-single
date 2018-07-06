@@ -1,10 +1,12 @@
 var path = require('path')
 var config = require('./config')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var MiniCssExtractPlugin = require('mini-css-extract-plugin')
 var autoprefixer = require('autoprefixer')
+var pxtorem = require('postcss-pxtorem')
+var theme = require('../package.json').theme
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = process.env.NODE_ENV === 'production'
+  var assetsSubDirectory = process.env.NODE_ENV !== 'development'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
@@ -16,7 +18,7 @@ exports.cssLoaders = function (options) {
   var cssLoader = {
     loader: 'css-loader',
     options: {
-      minimize: process.env.NODE_ENV === 'production',
+      minimize: process.env.NODE_ENV !== 'development',
       sourceMap: options.sourceMap
     }
   }
@@ -26,7 +28,11 @@ exports.cssLoaders = function (options) {
       options: {
           sourceMap: options.sourceMap,
           plugins: [
-              autoprefixer()
+              autoprefixer(),
+              pxtorem({
+                  rootValue: 100,
+                  propWhiteList: []
+              })
           ]
       }
   }
@@ -46,10 +52,7 @@ exports.cssLoaders = function (options) {
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'style-loader'
-      })
+      return [MiniCssExtractPlugin.loader].concat(loaders)
     } else {
       return ['style-loader'].concat(loaders)
     }
@@ -58,7 +61,7 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('less'),
+    less: generateLoaders('less', { javascriptEnabled: true, modifyVars: theme }),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),

@@ -7,13 +7,14 @@ function resolve (dir) {
 }
 
 module.exports = {
+  mode: process.env.NODE_ENV !== 'devlopment' ? 'production' : 'devlopment',
   entry: {
     app: './src/index.js'
   },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
+    publicPath: process.env.NODE_ENV !== 'devlopment'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
@@ -27,18 +28,8 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        include: [resolve('src')],
-        exclude: [resolve('node_modules'), resolve('dist')],
-        loader: 'eslint-loader',
-        options: {
-          fix: true    
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('tests')]
+        include: [resolve('src')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
