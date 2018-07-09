@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Loadable from 'react-loadable';
+import Loading from '@/utils/load';
 
 import Layout from '@/views/Layout';
 import Login from '@/views/Login';
@@ -27,6 +29,14 @@ export const childRoutes = [
 				'teachermanage1'
 			);
 		}
+	},
+	{
+		path: '/td',
+		//component: TeacherManage,
+		component: Loadable({
+			loader: () => import('@/views/TeacherManage'),
+			loading: Loading
+		})
 	}
 ];
 
@@ -46,6 +56,8 @@ const routes = (
 				})
 			}
 		/>
+
+		<Route path="/tm1" component={childRoutes[2].component} />
 
 		{/* <Route path="/" component={Layout} /> */}
 	</Switch>
