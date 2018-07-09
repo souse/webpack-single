@@ -1,17 +1,15 @@
-var path = require('path')
-var utils = require('./utils')
-var webpack = require('webpack')
-var config = require('./config')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var MiniCssExtractPlugin = require('mini-css-extract-plugin')
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var path = require('path');
+var utils = require('./utils');
+var webpack = require('webpack');
+var config = require('./config');
+var merge = require('webpack-merge');
+var baseWebpackConfig = require('./webpack.base.conf');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-var env = process.env.NODE_ENV === 'test'
-  ? require('./config/test.env')
-  : config.build.env
+var env = process.env.NODE_ENV === 'test' ? require('./config/test.env') : config.build.env;
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -38,9 +36,10 @@ var webpackConfig = merge(baseWebpackConfig, {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10  
+          priority: -10
         },
-        default: {//cacheGroups重写继承配置，设为false不继承
+        default: {
+          //cacheGroups重写继承配置，设为false不继承
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true
@@ -51,7 +50,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // minimizer: [
     //   new UglifyJsPlugin({
     //     uglifyOptions: {
-    //       warnings: false  
+    //       warnings: false
     //     },
     //     sourceMap: true
     //   }),
@@ -65,18 +64,16 @@ var webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': env
-    }), 
+    }),
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       chunkFilename: utils.assetsPath('css/[id].[contenthash].css')
-    }),   
+    }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'test'
-        ? 'index.html'
-        : config.build.index,
+      filename: process.env.NODE_ENV === 'test' ? 'index.html' : config.build.index,
       template: 'index.html',
       inject: true,
       minify: {
@@ -90,29 +87,25 @@ var webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency'
     })
   ]
-})
+});
 
 if (config.build.productionGzip) {
-  var CompressionWebpackPlugin = require('compression-webpack-plugin')
+  var CompressionWebpackPlugin = require('compression-webpack-plugin');
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-      ),
+      test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
       threshold: 10240,
       minRatio: 0.8
     })
-  )
+  );
 }
 
 if (config.build.bundleAnalyzerReport) {
-  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 }
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

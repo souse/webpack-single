@@ -12,9 +12,16 @@ class TeacherManage extends Component {
 	}
 
 	render() {
+		const Banner = import(/* webpackChunkName: 'banner' */ '@/views/BannerManage').then(module => {
+			return module.default;
+		});
+
 		return (
-			<div>这是老师页面</div>
-		)
+			<div>
+				<Banner />
+				这是老师页面
+			</div>
+		);
 	}
 }
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Layout, Affix , Row, Col } from 'antd';
+import { Layout, Affix, Row, Col } from 'antd';
 import { Route, Redirect } from 'react-router-dom';
 
 import { childRoutes } from '@/route';
@@ -23,9 +23,9 @@ class App extends Component {
 	}
 
 	componentWillMount() {
-	    const {actions} = this.props;
-	    
-	    console.log(this.props);
+		const { actions } = this.props;
+
+		console.log(this.props);
 	}
 
 	render() {
@@ -33,51 +33,48 @@ class App extends Component {
 		const USER = getItem('USER');
 
 		return (
-			<Layout className="ant-layout-has-sider" >
-	        	<Sidebar />
-		        <Layout>
-		        	<Header auth={USER} logout={logout} />
-		        	<Content style={{ margin: '0 16px' }}>
-		        		<NavPath data={navpath} />
-		        		<div style={{ minHeight: 360 }}>
-		        			{childRoutes.map((route, index) => (
-				                <Route key={index} path={route.path} component={authHOC(route.component)} exactly={route.exactly} />
-				            ))}	
-		        		</div>		
-		        	</Content>		
-		        </Layout>
-	      	</Layout>	
-		)
+			<Layout className="ant-layout-has-sider">
+				<Sidebar />
+				<Layout>
+					<Header auth={USER} logout={logout} />
+					<Content style={{ margin: '0 16px' }}>
+						<NavPath data={navpath} />
+						<div style={{ minHeight: 360 }}>
+							{childRoutes.map((route, index) => (
+								<Route
+									key={index}
+									path={route.path}
+									component={authHOC(route.component)}
+									exactly={route.exactly}
+								/>
+							))}
+						</div>
+					</Content>
+				</Layout>
+			</Layout>
+		);
 	}
 }
 
 App.propTypes = {
-  	auth: PropTypes.object,
-  	navpath: PropTypes.array
+	auth: PropTypes.object,
+	navpath: PropTypes.array
 };
 
-const mapStateToProps = (state) => {
-  	const { auth, menu } = state;
+const mapStateToProps = state => {
+	const { auth, menu } = state;
 
-  	return {
-    	auth: auth ? auth : null,
-    	navpath: menu.navpath
-  	};	
+	return {
+		auth: auth ? auth : null,
+		navpath: menu.navpath
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  	return bindActionCreators({ logout }, dispatch);
-}
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({ logout }, dispatch);
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-
-
-
-
-
-
-
-
-
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App);

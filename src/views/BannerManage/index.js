@@ -1,18 +1,12 @@
-import React, { Component } from 'react'
-import './index.less'
+import React, { Component } from 'react';
+import './index.less';
 
 export default class Index extends Component {
-    state = {}
+	state = {};
 
-    componentDidMount() {
+	componentDidMount() {}
 
-    }
-
-    render() {
-        return (
-            <div>
-
-            </div>
-        )
-    }
+	render() {
+		return <div>11111</div>;
+	}
 }
