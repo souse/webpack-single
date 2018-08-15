@@ -1,7 +1,7 @@
 {
-  "name": "yueke_houtai",
+  "name": "webpack-single",
   "version": "1.0.0",
-  "description": "约课后台",
+  "description": "webpack react project",
   "main": "index.js",
   "scripts": {
     "build": "node build/build.js",
